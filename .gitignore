@@ -1,0 +1,12 @@
+# Visual Studio
+.vs/
+
+# .NET build
+bin/
+obj/
+
+# Node
+node_modules/
+
+# logs
+*.log

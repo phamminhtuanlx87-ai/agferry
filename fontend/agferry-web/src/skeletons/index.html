@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <link href="src/output.css" rel="stylesheet" />
+
+    <title>An Giang Ferry JSC</title>
+  </head>
+
+  <body>
+  <div class="bg-neutral-bg text-neutral-text-main min-h-screen flex flex-col">
+    <!-- ================= HEADER ================= -->
+    <header class="bg-primary shadow-sm">
+      <div
+        class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between"
+      >
+        <!-- Logo -->
+        <div class="flex items-center gap-2 font-bold text-white">
+          <img src="assets/img/banner_left.png" class="w-10 h-10" alt="" />
+          An Giang Ferry JSC
+        </div>
+
+        <!-- Menu desktop -->
+        <nav class="hidden sm:flex gap-6 text-white">
+          <a class="font-semibold hover:text-accent transition" href="#"
+            >Trang chủ</a
+          >
+          <a class="hover:text-accent transition" href="#">Giới thiệu</a>
+          <a class="hover:text-accent transition" href="#">Liên hệ</a>
+        </nav>
+
+        <!-- Mobile button -->
+        <button id="menuToggle" class="sm:hidden text-white text-2xl">
+          ☰
+        </button>
+      </div>
+    </header>
+
+    <!-- ================= MAIN ================= -->
+    <main class="flex-1 flex justify-center">
+      <div class="card-login flex items-center justify-center mx-auto ">
+        <div
+          class="banerleft w-130.25 h-100 bg-[url('../assets/img/banner_left.png')] bg-no-repeat bg-contain bg-center md:flex md:flex-col items-center justify-center text-center hidden"
+        ></div>
+        <div class="banerright bg-[#f3f4f6]">
+          <div
+            class="sm:w-111.75 w-83.75 bg-white card-soft"
+          >
+            <h2 class="text-xl font-bold mb-2 text-shadow-sm">Đăng nhập</h2>
+            <form action="post" class="flex flex-col gap-3">
+              <label class="text-shadow-sm text-gray-500">Tên đăng nhập:</label>
+              <input
+                type="text"
+                class="username card-soft rounded-md h-11 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 text-shadow-sm"
+              />
+              <label class="text-shadow-sm text-gray-500">Mật khẩu:</label>
+              <input
+                type="password"
+                class="password card-soft rounded-md h-11 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 text-shadow-sm"
+              />
+              <button
+                class="btn-login btn-primary min-w-60 mx-auto btn-elevated mt-5">
+                Đăng nhập
+              </button>
+              <button
+                class="btn-login-google btn-secondary text-gray-700 min-w-60 flex justify-center items-center gap-3 
+                mx-auto btn-elevated my-2"
+              >
+                <img src="assets/img/googleicon.svg" class="w-5 h-5" />
+                Đăng nhập với Google
+              </button>
+              <div
+                class="text-blue-500 text-sm font-light mx-auto cursor-pointer hover:underline text-shadow-sm t"
+              >
+                Tôi quên mật khẩu?
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="h-12 flex items-center justify-center text-sm text-gray-400">
+      © 2026 An Giang Ferry JSC
+    </footer>
+
+    <!-- ================= OVERLAY ================= -->
+    <div
+      id="menu-overlay"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-40"
+    ></div>
+
+    <!-- ================= MOBILE MENU ================= -->
+    <aside
+      class="fixed top-0 left-0 h-full w-72 bg-primary -translate-x-full transition-transform duration-300 z-50"
+      id="mobile-menu"
+    >
+      <!-- Header mobile -->
+      <div
+        class="h-14 flex items-center justify-between px-4 text-white border-b border-white/20"
+      >
+        <span class="font-bold">Menu</span>
+        <button id="closeMenu" class="text-2xl">✕</button>
+      </div>
+
+      <!-- Items -->
+      <nav class="flex flex-col px-6 py-4 gap-4 text-white">
+        <a class="py-2 hover:bg-primary-hover rounded transition" href="#"
+          >Trang chủ</a
+        >
+        <a class="py-2 hover:bg-primary-hover rounded transition" href="#"
+          >Giới thiệu</a
+        >
+        <a class="py-2 hover:bg-primary-hover rounded transition" href="#"
+          >Liên hệ</a
+        >
+      </nav>
+    </aside>
+
+    <!-- ================= SCRIPT ================= -->
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const overlay = document.getElementById("menu-overlay");
+      const closeMenuBtn = document.getElementById("closeMenu");
+
+      function openMenu() {
+        document.body.classList.add("overflow-hidden");
+        overlay.classList.remove("hidden");
+        mobileMenu.classList.remove("-translate-x-full");
+      }
+
+      function closeMenu() {
+        mobileMenu.classList.add("-translate-x-full");
+        document.body.classList.remove("overflow-hidden");
+        setTimeout(() => overlay.classList.add("hidden"), 300);
+      }
+
+      menuToggle.addEventListener("click", openMenu);
+      closeMenuBtn.addEventListener("click", closeMenu);
+      overlay.addEventListener("click", closeMenu);
+
+      document
+        .querySelectorAll("#mobile-menu a")
+        .forEach((link) => link.addEventListener("click", closeMenu));
+    </script>
+    </div>
+  </body>
+</html>
