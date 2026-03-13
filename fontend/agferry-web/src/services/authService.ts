@@ -16,3 +16,13 @@ export const logout = () => {
   localStorage.removeItem("token");
   window.location.href = "/login";
 };
+
+export const register = (username: string, password: string, email: string, fullname:string, roleID: number) => {
+  return api.post("/Users/register", {
+    username: username,
+    password: password,
+    email: email,
+    fullname: fullname,
+    roleID: roleID,
+  });
+};
