@@ -16,3 +16,21 @@ export const logout = () => {
   localStorage.removeItem("token");
   window.location.href = "/login";
 };
+
+export const register = (username: string, password: string, email: string, fullname:string, roleID: number) => {
+  return api.post("/Users/register", {
+    username: username,
+    password: password,
+    email: email,
+    fullname: fullname,
+    roleID: roleID,
+  });
+};
+export const getCurrentUser = () => {
+  return api.get("/Users/me");
+};
+
+export const updateProfile = (data: { fullName: string }) =>{
+  return api.put("/users/me", data);
+};
+  

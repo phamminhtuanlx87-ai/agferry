@@ -68,7 +68,7 @@ const Header = ({ variant = "auth", openMenu, toggleSidebar }: Props) => {
                 viewBox="0 0 24 24"
                 strokeWidth="2"
                 stroke="currentColor"
-                className="size-5 hover:text-accent"
+                className="size-5 hover:text-accent cursor-pointer"
               >
                 <path
                   strokeLinecap="round"

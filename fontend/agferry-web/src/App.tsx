@@ -8,12 +8,15 @@ import AuthLayout from "./components/layout/AuthLayout";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
+import ProfilePage from "./pages/ProfilePage";
+import EditProfilePage from "./pages/EditProfilePage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AuthLayout />}>
+          <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
@@ -26,6 +29,8 @@ function App() {
           }
         >
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+           <Route path="/editprofile" element={<EditProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

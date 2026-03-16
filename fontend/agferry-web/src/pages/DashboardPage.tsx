@@ -5,211 +5,82 @@ import Footer from "@/components/layout/Footer";
 import ProjectStatusChart from "@/components/project/ProjectStatusChart";
 import ProjectTable from "@/components/project/ProjectTable";
 import { projects } from "@/data/projects.ts";
-
+import Header from "@/components/layout/Header";
+import Siderbar from "@/components/layout/Siderbar";
+import { useEffect, useState } from "react";
+import Overlay from "@/components/layout/Overlay";
+import SummaryCard from "@/components/dashboard/SummaryCard";
+import SumIcon from "@/components/dashboard/SumIcon"
 // import Chart from "react-apexcharts";
 const DashboardPage = () => {
-  
-  
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openMenu = () => {
+    setIsMenuOpen(true);
+    document.body.classList.add("overflow-hidden");
+  };
+  const toggleSidebar = (open: boolean) => {
+    setIsOpen(open);
+  };
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    document.body.classList.remove("overflow-hidden");
+  };
+  // khóa scroll body khi mở sidebar
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [isOpen]);
+
   return (
     <>
       <div className="min-h-screen flex flex-col bg-neutral-bg text-neutral-text-main font-[Poppins]">
-        {/* <header className="h-14 bg-primary text-white flex items-center justify-between px-4 shadow-sm border-b border-white/20">
-          <div className="flex items-center gap-2 font-bold cursor-pointer hover:text-accent transition">
-            <img src={bannerLeft} className="w-10 h-10" alt="" />
-            <span className="text-2xl">An Giang Ferry JSC</span>
-          </div> */}
+        {/* HEADER */}
+        <Header
+          variant="dashboard"
+          openMenu={openMenu}
+          toggleSidebar={toggleSidebar}
+        />
 
-          {/* <!-- Desktop menu --> */}
-          {/* <nav className="hidden md:flex gap-3 text justify-start items-center">
-            <div className="border border-gray-100 rounded-full bg-white h-10 w-10">
-              <a href="#" className="hover:text-accent transition">
-                <img src={avata} className="w-9 h-9" alt="" />
-              </a>
-            </div>
-            <div className="flex gap-1">
-              <a href="#" className="hover:text-accent transition">
-                Phạm Minh Tuấn
-              </a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                className="size-5 hover:text-accent"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </div>
-          </nav> */}
-
-          {/* <!-- Mobile toggle --> */}
-          {/* <button
-            className="md:hidden text-2xl"
-            onClick={() => toggleSidebar(true)}
-          >
-            ☰
-          </button>
-        </header> */}
+        {/* PAGE CONTENT */}
 
         {/* <!-- ================= MAIN ================= --> */}
-        <main className="flex flex-1 overflow-hidden">
-                   {/* <!-- Content --> */}
+        <section className="flex flex-1 overflow-hidden">
+          <Siderbar isOpen={isOpen} toggleSidebar={toggleSidebar}></Siderbar>
+          {/* <!-- Content --> */}
           <section className="flex-1 p-6 overflow-y-auto md:ml-10">
             <h1 className="text-xl md:text-3xl lg:text-4xl mb-4 tracking-wide uppercase font-semibold text-gray-800">
               TỔNG QUAN <span className="">NĂM 2026</span>
             </h1>
+            <h2 className="text-sm md:text-2xl lg:text-3xl mb-4 tracking-wide uppercase font-semibold text-gray-700">
+              Tháng <span className="">01</span>
+            </h2>
             {/* <!-- cards --> */}
             <div className="content-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* <!-- Card summary --> */}
-              <div className="bg-indigo-800 text-white p-6 rounded-2xl shadow-lg hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between">
-                {/* <!-- Top --> */}
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm opacity-80">Tổng công trình</p>
-                    <h2 className="text-3xl font-bold mt-1">48</h2>
-                  </div>
-                  <svg
-                    className="w-10 h-10 opacity-70"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3 21h18M9 8h1m-1 4h1m-1 4h1m4-8h1m-1 4h1m-1 4h1M5 3h14v18H5z"
-                    />
-                  </svg>
-                </div>
-
-                {/* <!-- Progress --> */}
-                <div className="mt-4">
-                  <div className="w-full bg-white/20 h-2 rounded-full">
-                    <div className="bg-white h-2 rounded-full w-3/4"></div>
-                  </div>
-                </div>
-
-                {/* <!-- Footer --> */}
-                <div className="flex justify-between text-xs mt-3 opacity-80">
-                  <span className="text-green-300">+6% so với tháng trước</span>
-                  <span>Cập nhật 15 phút trước</span>
-                </div>
-              </div>
+              <SummaryCard color="bg-indigo-800" title="Tổng công trình" value={48} subtile="" icon={<SumIcon variant="projects"></SumIcon>}
+              colorchange="text-green-300" change="+2 Công trình " description="Cập nhật 15 phút trước"
+              ></SummaryCard>
+             
               {/* <!-- card progress --> */}
-              <div className="bg-slate-700 text-white p-6 rounded-2xl shadow-lg hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm opacity-80">Đang thi công</p>
-                    <h2 className="text-3xl font-bold mt-1">12</h2>
-                    <p className="text-xs opacity-70 mt-1">25% tổng số dự án</p>
-                  </div>
-                  <svg
-                    className="w-10 h-10 opacity-70"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 6v6l4 2"
-                    />
-                    <circle cx="12" cy="12" r="9" />
-                  </svg>
-                </div>
-
-                <div className="mt-4">
-                  <div className="w-full bg-white/20 h-2 rounded-full">
-                    <div className="bg-white h-2 rounded-full w-1/4"></div>
-                  </div>
-                </div>
-
-                <div className="flex justify-between text-xs mt-3 opacity-80">
-                  <span className="text-yellow-300">+2 dự án mới</span>
-                  <span>Cập nhật hôm nay</span>
-                </div>
-              </div>
+              <SummaryCard color="bg-slate-700" title="Đang thi công" value={12} subtile="25% tổng số dự án" icon={<SumIcon variant="progress"></SumIcon>}
+              colorchange="text-yellow-300" change="+2 công trình" description="Cập nhật 15 phút trước"
+              ></SummaryCard>
+              
               {/* <!-- Card settlement --> */}
-              <div className="bg-orange-500 text-white p-6 rounded-2xl shadow-lg hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm opacity-90">Đang quyết toán</p>
-                    <h2 className="text-3xl font-bold mt-1">12</h2>
-                    <p className="text-xs opacity-80 mt-1">
-                      Trung bình 18 ngày xử lý
-                    </p>
-                  </div>
-                  <svg
-                    className="w-10 h-10 opacity-80"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12h6M9 16h6M9 8h6M5 3h14v18H5z"
-                    />
-                  </svg>
-                </div>
-
-                <div className="mt-4">
-                  <div className="w-full bg-white/30 h-2 rounded-full">
-                    <div className="bg-white h-2 rounded-full w-1/2"></div>
-                  </div>
-                </div>
-
-                <div className="flex justify-between text-xs mt-3 opacity-90">
-                  <span className="text-white">-1 so với tuần trước</span>
-                  <span>Cập nhật 1 giờ trước</span>
-                </div>
-              </div>
+              <SummaryCard color="bg-orange-500" title="Đang quyết toán" value={12} subtile="25% tổng số dự án" icon={<SumIcon variant="done"></SumIcon>}
+              colorchange="text-white" change="+1 công trình" description="Cập nhật 15 phút trước"
+              ></SummaryCard>
+              
               {/* <!-- card completed --> */}
-              <div className="bg-emerald-600 text-white p-6 rounded-2xl shadow-lg hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm opacity-90">Hoàn thành</p>
-                    <h2 className="text-3xl font-bold mt-1">24</h2>
-                    <p className="text-xs opacity-80 mt-1">
-                      50% tổng số công trình
-                    </p>
-                  </div>
-                  <svg
-                    className="w-10 h-10 opacity-80"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-
-                <div className="mt-4">
-                  <div className="w-full bg-white/30 h-2 rounded-full">
-                    <div className="bg-white h-2 rounded-full w-1/2"></div>
-                  </div>
-                </div>
-
-                <div className="flex justify-between text-xs mt-3 opacity-90">
-                  <span className="text-green-200">
-                    +4 hoàn thành tháng này
-                  </span>
-                  <span>Cập nhật hôm nay</span>
-                </div>
-              </div>
+              <SummaryCard color="bg-emerald-600" title="Hoàn thành" value={24} subtile="50% tổng số dự án" icon={<SumIcon variant="warning"></SumIcon>}
+              colorchange="text-white" change="+2 công trình" description="Cập nhật 15 phút trước"
+              ></SummaryCard>
             </div>
             {/* <!-- table project --> */}
             <div className="content-2 table-list mt-5 bg-white border border-gray-50 border-shadow flex flex-col gap-5">
@@ -492,10 +363,13 @@ const DashboardPage = () => {
               </div>
             </div>
           </section>
-        </main>
+        </section>
         {/* Footer */}
         <Footer></Footer>
       </div>
+
+      {/* OVERLAY */}
+      <Overlay isMenuOpen={isMenuOpen} closeMenu={closeMenu} />
     </>
   );
 };
