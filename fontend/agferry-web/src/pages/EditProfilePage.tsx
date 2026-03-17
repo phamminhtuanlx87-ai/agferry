@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import { getCurrentUser, updateProfile } from "@/services/authService";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Siderbar from "@/components/layout/Siderbar";
 
 type User = {
   username: string;
@@ -12,14 +9,11 @@ type User = {
 };
 
 const EditProfilePage = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  
   const [user, setUser] = useState<User | null>(null);
-
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-  const toggleSidebar = (open: boolean) => setIsOpen(open);
 
   // Load user
   useEffect(() => {
@@ -57,14 +51,8 @@ const EditProfilePage = () => {
   if (!user) return <div>Đang tải...</div>;
 
   return (
-    <div className="min-h-screen flex flex-col bg-neutral-bg">
-      <Header variant="dashboard" toggleSidebar={toggleSidebar} />
-
-      <section className="flex flex-1">
-        <Siderbar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-
+    <>
         <div className="flex-1 p-6 max-w-3xl mx-auto w-full">
-
           <h1 className="text-2xl font-bold mb-6">
             Chỉnh sửa thông tin cá nhân
           </h1>
@@ -88,7 +76,7 @@ const EditProfilePage = () => {
               {/* Full name */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Họ tên
+                  Họ và tên
                 </label>
                 <input
                   value={fullName}
@@ -163,10 +151,7 @@ const EditProfilePage = () => {
             </form>
           </div>
         </div>
-      </section>
-
-      <Footer />
-    </div>
+      </>
   );
 };
 

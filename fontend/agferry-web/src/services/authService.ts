@@ -25,16 +25,21 @@ export const register = (username: string, password: string, email: string, full
     fullname: fullname,
     roleID: roleID,
   });
-<<<<<<< HEAD
 };
-export const getCurrentUser = () => {
-  return api.get("/Users/me");
+export const getCurrentUser = async () => {
+  // return api.get("/Users/me");
+   return {
+    data: {
+       username: "andypham",
+      fullName: "Minh Tuấn Phạm",
+      email: "tuan@gmail.com",
+      avatar: "",
+      departmentName: "IT"   // ⭐ thêm dòng này
+    }
+  }
 };
 
 export const updateProfile = (data: { fullName: string }) =>{
   return api.put("/users/me", data);
 };
   
-=======
-};
->>>>>>> f42b77668fb7ffa8608a267c25a4db9f9dfb5bd6
