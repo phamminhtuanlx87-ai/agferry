@@ -8,7 +8,7 @@ type SummaryCardProps = {
   change?: string; // +6%
   description?: string; // so với tháng trước
   color: string;
-  colorchange?:string;
+  colorchange?: string;
   icon?: ReactNode;
 };
 const SummaryCard = ({

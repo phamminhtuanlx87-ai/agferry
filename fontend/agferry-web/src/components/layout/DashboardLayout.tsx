@@ -6,14 +6,17 @@ import Header from "./Header";
 import Overlay from "./Overlay";
 import Footer from "./Footer";
 import Siderbar from "./Siderbar";
+import Breadcrumb from "./Breadcrumb";
 // import { isAuthenticated } from "@/services/authService";
+
 const DashboardLayout = () => {
   // if (!isAuthenticated()) {
   //   return <Navigate to="/login" replace />;
   // }
 
-  const [isOpen, setIsOpen] = useState(false);
+  
   //-------------- Start toggleSidebar -----------------
+  const [isOpen, setIsOpen] = useState(false);
   const openMenu = () => {
     setIsOpen(true);
     document.body.classList.add("overflow-hidden");
@@ -34,6 +37,11 @@ const DashboardLayout = () => {
     document.body.classList.remove("overflow-hidden");
   };
   //-------------- End toggleSidebar -----------------
+
+
+
+
+
   return (
     <>
       <div className="min-h-screen flex flex-col bg-neutral-bg text-neutral-text-main font-[Poppins]">
@@ -49,6 +57,7 @@ const DashboardLayout = () => {
           <Siderbar isOpen={isOpen} toggleSidebar={toggleSidebar}></Siderbar>
         {/* <!-- ================= MAIN ================= --> */}
           <main className="flex-1 overflow-y-auto">
+            <Breadcrumb/>
             <Outlet />
           </main>
         </section>

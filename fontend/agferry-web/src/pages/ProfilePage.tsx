@@ -6,6 +6,7 @@ type User = {
   fullName: string;
   phone: string;
   email: string;
+  avatar: string;
   departmentName: string;
   role: string;
 };
@@ -18,7 +19,8 @@ const ProfilePage = () => {
         username: "andypham",
         fullName: "Phạm Minh Tuấn",
         email: "tuan@gmail.com",
-        phone: "0901 234 567",
+        phone: "0901.234.567",
+        avatar: "",
         departmentName: "IT",
         role: "Nhân viên",
       });
@@ -31,9 +33,9 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="p-6 space-y-6 max-w-5xl mx-auto">
+      <div className="p-10 space-y-6 max-w-5xl mx-auto">
         {/* TITLE */}
-        <h1 className="text-2xl font-bold">Thông tin người dùng</h1>
+        <h1 className="text-2xl font-bold">Hồ sơ cá nhân</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* 🟪 PROFILE OVERVIEW */}
@@ -53,6 +55,8 @@ const ProfilePage = () => {
 
             <p className="text-gray-500">@{user.username}</p>
 
+            <p className="text-gray-500">{user.email}</p>
+
             {/* Badges */}
             <div className="mt-3 flex justify-center gap-2">
               <span className="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded-full">
@@ -65,13 +69,26 @@ const ProfilePage = () => {
             </div>
 
             {/* Edit button */}
-            
-            <Link to="editprofile" className="block mt-5 min-w-10 bg-indigo-600 text-white py-2 rounded-lg
-             hover:bg-indigo-700 transition">✏️ Chỉnh sửa thông tin</Link>
+            <div className="flex justify-center items-center gap-4">
+              <Link
+                to="edit"
+                className="block p-4 mt-5 min-w-10 bg-indigo-600 text-white py-2 rounded-lg
+             hover:bg-indigo-700 transition"
+              >
+                ✏️ Chỉnh sửa thông tin
+              </Link>
+              <Link
+                to="password"
+                className="block p-4 mt-5 min-w-10 bg-gray-100 text-primary py-2 rounded-lg
+             hover:bg-gray-200 transition"
+              >
+                🔑 Đổi mật khẩu
+              </Link>
+            </div>
           </div>
 
           {/* 🟦 THÔNG TIN CHI TIẾT */}
-          <div className="bg-white rounded-xl shadow p-6">
+          <div className="bg-white rounded-xl shadow py-6 px-20">
             <h3 className="text-lg font-semibold mb-4">Chi tiết</h3>
 
             <div className="space-y-3 text-sm">
@@ -101,10 +118,18 @@ const ProfilePage = () => {
             <h3 className="text-lg font-semibold mb-4">Hành động nhanh</h3>
 
             <div className="grid grid-cols-2 gap-3">
-              <ActionButton text="Đổi mật khẩu" icon="🔑" />
-              <ActionButton text="Cập nhật avatar" icon="🖼" />
-              <ActionButton text="Cài đặt thông báo" icon="🔔" />
-              <ActionButton text="Cài đặt tài khoản" icon="⚙️" />
+              <Link to="password">
+                <ActionButton text="Đổi mật khẩu" icon="🔑" />
+              </Link>
+              <Link to="">
+                <ActionButton text="Cập nhật avatar" icon="🖼" />
+              </Link>
+              <Link to="">
+                <ActionButton text="Cài đặt thông báo" icon="🔔" />
+              </Link>
+              <Link to="">
+                <ActionButton text="Cài đặt tài khoản" icon="⚙️" />
+              </Link>
             </div>
           </div>
         </div>
@@ -121,7 +146,7 @@ type InfoRowProps = {
 };
 function InfoRow({ label, value }: InfoRowProps) {
   return (
-    <div className="flex justify-between border-b pb-2">
+    <div className="flex justify-between pb-2">
       <span className="text-gray-500">{label}</span>
       <span className="font-medium">{value}</span>
     </div>
@@ -146,9 +171,9 @@ type ActionButtonProps = {
 
 function ActionButton({ text, icon }: ActionButtonProps) {
   return (
-    <button className="flex items-center justify-center gap-2 p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+    <div className="flex items-center justify-center gap-2 p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
       <span>{icon}</span>
       <span>{text}</span>
-    </button>
+    </div>
   );
 }

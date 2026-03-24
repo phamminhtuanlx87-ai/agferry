@@ -30,16 +30,18 @@ export const getCurrentUser = async () => {
   // return api.get("/Users/me");
    return {
     data: {
-       username: "andypham",
+      username: "andypham",
       fullName: "Minh Tuấn Phạm",
+      phone: "0901.234.567",
       email: "tuan@gmail.com",
       avatar: "",
-      departmentName: "IT"   // ⭐ thêm dòng này
+      departmentName: "IT",   // ⭐ thêm dòng này
+      role: "Nhân viên",
     }
   }
 };
 
-export const updateProfile = (data: { fullName: string }) =>{
+export const updateProfile = (data: { fullName: string, phone:string }) =>{
   return api.put("/users/me", data);
 };
   

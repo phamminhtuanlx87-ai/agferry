@@ -25,9 +25,10 @@ const Siderbar = ({ isOpen, toggleSidebar }: Props) => {
         </div>
 
         <nav className="flex flex-col p-4 gap-3">
-          <a
+          <Link
             className="px-3 py-2 rounded hover:bg-accent flex gap-2 items-center justify-start"
-            href="#"
+            to="dashboard"
+            onClick={() => toggleSidebar?.(false)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -44,10 +45,11 @@ const Siderbar = ({ isOpen, toggleSidebar }: Props) => {
               />
             </svg>
             Tổng quan
-          </a>
-          <a
+          </Link>
+          <Link
+            to="/projects"
             className="px-3 py-2 rounded hover:bg-accent flex gap-2 items-center justify-start"
-            href="#"
+            onClick={() => toggleSidebar?.(false)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +66,7 @@ const Siderbar = ({ isOpen, toggleSidebar }: Props) => {
               />
             </svg>
             Công trình / Dự án
-          </a>
+          </Link>
           <a
             className="px-3 py-2 rounded hover:bg-accent flex gap-2 items-center justify-start"
             href="#"

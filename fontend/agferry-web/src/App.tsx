@@ -12,6 +12,9 @@ import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import EditPassword from "./pages/EditPassword";
+import AddProject from "./components/project/AddProject";
+import ProjectsPage from "./pages/ProjectsPage";
 
 const queryClient = new QueryClient();
 function App() {
@@ -34,7 +37,10 @@ function App() {
           >
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/editprofile" element={<EditProfilePage />} />
+            <Route path="/profile/edit" element={<EditProfilePage />} />
+            <Route path="/profile/password" element={<EditPassword />} />
+             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/addproject" element={<AddProject />} />
           </Route>
         </Routes>
       </BrowserRouter>

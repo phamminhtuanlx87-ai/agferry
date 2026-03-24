@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import RoleSelect from "./RoleSelect"
+// import RoleSelect from "./RoleSelect"
 
 const RegisterForm = () => {
   return (
@@ -34,7 +34,7 @@ const RegisterForm = () => {
                 className="email card-soft rounded-md h-11 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 text-shadow-sm"
               />
               
-              <RoleSelect></RoleSelect>
+              {/* <RoleSelect></RoleSelect> */}
               <button className="btn-login btn-primary min-w-60 mx-auto btn-elevated mt-3">
                 Tạo tài khoản
               </button>

@@ -1,6 +1,8 @@
 import "remixicon/fonts/remixicon.css";
 import bannerLeft from "@/assets/images/banner_left.png";
-import avata from "@/assets/icons/avata.svg";
+import { Link } from "react-router-dom";
+
+
 type Props = {
   variant?: "auth" | "dashboard";
   openMenu?: () => void;
@@ -8,6 +10,7 @@ type Props = {
 };
 
 const Header = ({ variant = "auth", openMenu, toggleSidebar }: Props) => {
+  
   return (
     <>
       {/* Menu desktop (chỉ auth) */}
@@ -53,15 +56,18 @@ const Header = ({ variant = "auth", openMenu, toggleSidebar }: Props) => {
 
           {/* <!-- Desktop menu --> */}
           <nav className="hidden md:flex gap-3 text justify-start items-center">
-            <div className="border border-gray-100 rounded-full bg-white h-10 w-10">
-              <a href="#" className="hover:text-accent transition">
-                <img src={avata} className="w-9 h-9" alt="" />
-              </a>
+           <div className="relative w-10 h-10">
+              <div className="w-full h-full rounded-full bg-indigo-200 flex items-center justify-center text-4xl font-bold text-indigo-700">
+               T
+              </div>
+
+              {/* Status */}
+              <span className="absolute bottom-1 right-1 w-2 h-2 bg-green-500 border-2 border-white rounded-full"></span>
             </div>
             <div className="flex gap-1">
-              <a href="#" className="hover:text-accent transition">
+              <Link to="profile" className="hover:text-accent transition">
                 Phạm Minh Tuấn
-              </a>
+              </Link>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
