@@ -51,7 +51,7 @@ export default function ProjectTable({ projects, rowsPerPage = 5 }: ProjectTable
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           {/* HEADER */}
-          <thead className="bg-gray-50 text-gray-500 uppercase tracking-wider text-xs font-semibold">
+          <thead className="bg-gray-100 text-gray-500 uppercase tracking-wider text-xs font-semibold">
             <tr>
               <th className="px-6 py-4 hidden md:table-cell">Mã CT</th>
               <th className="px-6 py-4 min-w-55">Tên Công Trình</th>
@@ -72,11 +72,11 @@ export default function ProjectTable({ projects, rowsPerPage = 5 }: ProjectTable
           </thead>
 
           {/* BODY */}
-          <tbody className="divide-y divide-gray-100 text-gray-700">
+          <tbody className="divide-y divide-gray-100 text-gray-800">
             {currentProjects.map((project) => (
               <tr
                 key={project.id}
-                className="hover:bg-gray-50 transition-colors"
+                className="hover:bg-indigo-100 transition-colors cursor-pointer"
               >
                 <td className="px-6 py-4 hidden md:table-cell font-medium">
                   {project.id.toString().padStart(3, "0")}

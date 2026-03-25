@@ -1,0 +1,23 @@
+
+import { useForm } from "react-hook-form";
+
+function App(1) {
+  // Lấy hàm register từ hook useForm
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data1) => {
+    // data sẽ là một object chứa: { inspectionDate: "2026-03-25", ... }
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* "inspectionDate" chính là cái tên (key) 
+         mà bạn đặt cho dữ liệu trong Object kết quả 
+      */}
+      <input type="date" {...register("inspectionDate")} />
+      
+      <button type="submit">Gửi dữ liệu</button>
+    </form>
+  );
+}
