@@ -17,7 +17,7 @@ const OPTIONS_THAM_TRA = [
   { value: "TP", label: "Cty TNHH TV Thiết kế Xây dựng Trường Phú" },
 ];
 
-export const EstimationSection = ({
+export const AdjustedEstimateSection = ({
   register,
 }: {
   register: UseFormRegister<ProjectFormData>;
@@ -27,7 +27,7 @@ export const EstimationSection = ({
       {/* Tiêu đề khối */}
       <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex justify-between">
         <h3 className="font-bold text-sm uppercase text-blue-800">
-         II. Dự toán & Thẩm tra
+          V. Dự toánThẩm tra (Điều chỉnh)
         </h3>
         <span className="text-[10px] text-gray-400 italic font-medium">
           Đơn vị: VNĐ
@@ -39,31 +39,33 @@ export const EstimationSection = ({
         <div>
           <div className="flex items-center mb-4 text-amber-900">
             <span className="bg-amber-900 w-1 h-4 mr-2 rounded-full"></span>
-            <span className="text-sm font-bold uppercase">Dự toán</span>
+            <span className="text-sm font-bold uppercase">Dự toán (Điều chỉnh)</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FormField
               label="Ngày lập dự toán"
               type="date"
-              {...register("dt_ngay")}
+              {...register("dtdc_ngay")}
             />
             <FormField
               label="Tổng giá trị dự toán"
               type="text"
               placeholder="0"
-              {...register("dt_TongGiaTri")}
+              {...register("dtdc_TongGiaTri")}
             />
             <FormField
               label="Tổng chi phí xây dựng"
               type="text"
               placeholder="0"
-              {...register("dt_TongCPXD")}
+              {...register("dtdc_TongCPXD")}
             />
-            <SelectField label="Đơn vị" options={OPTIONS_DU_TOAN}  {...register("dt_DonVi")}></SelectField>
+            <SelectField label="Đơn vị" options={OPTIONS_DU_TOAN}
+             {...register("dtdc_DonVi")}
+            ></SelectField>
             <AttachField
               label="Link file đính kèm"
               placeholder="https://..."
-              {...register("dt_link")}
+              {...register("dtdc_link")}
             />
           </div>
         </div>
@@ -75,36 +77,36 @@ export const EstimationSection = ({
           <div className="flex items-center mb-4 text-blue-900">
             <span className="bg-blue-900 w-1 h-4 mr-2 rounded-full"></span>
             <span className="text-sm font-bold uppercase">
-              Thẩm tra dự toán
+              Thẩm tra dự toán (Điều chỉnh)
             </span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FormField
               label="Ngày thẩm tra"
               type="date"
-              {...register("tt_ngay")}
+              {...register("ttdc_ngay")}
             />
             <FormField
               label="Tổng giá trị sau thẩm tra"
               type="text"
               placeholder="0"
-              {...register("tt_TongGiaTri")}
+              {...register("ttdc_TongGiaTri")}
             />
             <FormField
               label="Tổng giá trị sau thẩm tra"
               type="text"
               placeholder="0"
-              {...register("tt_TongCPXD")}
+              {...register("ttdc_TongCPXD")}
             />
             <SelectField
               label="Đơn vị"
               options={OPTIONS_THAM_TRA}
-               {...register("tt_DonVi")}
+               {...register("ttdc_DonVi")}
             ></SelectField>
               <AttachField
               label="Link file đính kèm"
               placeholder="https://..."
-              {...register("tt_link")}
+              {...register("ttdc_link")}
             />
           </div>
         </div>

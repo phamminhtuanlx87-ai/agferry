@@ -16,7 +16,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectProps>(
         <select
           ref={ref}
           {...props}
-          className="border border-gray-300 rounded px-3 py-2 text-sm bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none cursor-pointer"
+          className="border border-gray-300 rounded px-3 py-2 text-sm bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none cursor-pointer"
         >
           {/* Dòng mặc định khi chưa chọn */}
           <option value="">-- Chọn {label} --</option>

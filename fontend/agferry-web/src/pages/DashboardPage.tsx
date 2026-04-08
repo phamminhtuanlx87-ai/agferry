@@ -1,13 +1,15 @@
 import "remixicon/fonts/remixicon.css";
 import ProjectStatusChart from "@/components/project/ProjectStatusChart";
 import ProjectTable from "@/components/project/ProjectTable";
-import { projects } from "@/data/projects.ts";
 import SummaryCard from "@/components/dashboard/SummaryCard";
 import SumIcon from "@/components/dashboard/SumIcon";
 import Todo from "@/components/dashboard/Todo";
 import { Link } from "react-router-dom";
 import FilterProject from "@/components/project/FilterProject";
 const DashboardPage = () => {
+
+
+
   return (
     <>
       {/* <!-- Content --> */}
@@ -76,13 +78,13 @@ const DashboardPage = () => {
             </h1>
             <Link
               to="/projects/addproject"
-              className="bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition text-sm font-semibold"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition text-sm font-semibold"
             >
               + Thêm công trình
             </Link>
           </div>
           <FilterProject></FilterProject>
-          <ProjectTable projects={projects}></ProjectTable>
+          <ProjectTable></ProjectTable>
         </div>
         {/* <!-- content 3 --> */}
         <div className="content-3 mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">

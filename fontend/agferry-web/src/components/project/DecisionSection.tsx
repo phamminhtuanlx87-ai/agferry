@@ -4,6 +4,7 @@ import type { ProjectFormData } from "./types";
 import { FormField } from "./FormField";
 import type { UseFormRegister } from "react-hook-form";
 import { SelectField } from "./SelectField";
+import { AttachField } from "./AttachFiled";
 
 // ĐỊNH NGHĨA DANH SÁCH Ở ĐÂY CHO DỄ TÌM
 const OPTIONS_DU_TOAN = [{ value: "PDT", label: "Phòng Đầu tư" }];
@@ -20,7 +21,9 @@ export const DecisionSection = ({
         <h3 className="font-bold text-blue-800 text-sm uppercase">
           III. Quyết định phê duyệt Dự toán
         </h3>
-        <span className="text-[10px] text-gray-400 italic font-medium"></span>
+         <span className="text-[10px] text-gray-400 italic font-medium">
+          Đơn vị: VNĐ
+        </span>
       </div>
 
       <div className="p-5 space-y-8">
@@ -34,29 +37,30 @@ export const DecisionSection = ({
             />
             <FormField
               label="Tổng giá trị phê duyệt"
-              type="number"
+              type="text"
               placeholder="0"
               {...register("pd_TongGiaTri")}
             />
             <FormField
               label="Tổng chi phí Xây dựng"
-              type="number"
+              type="text"
               placeholder="0"
               {...register("pd_TongCPXD")}
             />
             <SelectField
               label="Đơn vị"
-              options={OPTIONS_DU_TOAN}
+              options={OPTIONS_DU_TOAN} 
+              {...register("pd_DonVi")}
             ></SelectField>
-            <FormField
+            <AttachField
               label="Link file đính kèm"
               placeholder="https://..."
-              {...register("tt_link")}
+              {...register("pd_link")}
             />
           </div>
         </div>
 
-        <div className="border-t border-dashed border-slate-200" />
+        {/* <div className="border-t border-dashed border-slate-200" /> */}
       </div>
     </div>
   );

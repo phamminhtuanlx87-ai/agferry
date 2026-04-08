@@ -126,7 +126,7 @@ namespace agferry.api.Controllers
                 email = user.Email
             });
         }
-<<<<<<< HEAD
+
         [Authorize]
         [HttpPost("me")]
         public async Task<IActionResult> UpdateProfile([FromBody] UserRequest request)
@@ -183,8 +183,6 @@ namespace agferry.api.Controllers
                 departmentName = user.Department.Name
             });
         }
-=======
->>>>>>> f42b77668fb7ffa8608a267c25a4db9f9dfb5bd6
         public class UserRequest
         {
             [Required]

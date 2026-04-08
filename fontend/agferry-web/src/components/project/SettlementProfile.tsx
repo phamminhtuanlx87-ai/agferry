@@ -4,19 +4,26 @@ import type { ProjectFormData } from "./types";
 import { FormField } from "./FormField";
 import type { UseFormRegister } from "react-hook-form";
 import { SelectField } from "./SelectField";
+import { AttachField } from "./AttachFiled";
 
 // ĐỊNH NGHĨA DANH SÁCH Ở ĐÂY CHO DỄ TÌM
-const OPTIONS_DU_TOAN = [{ value: "PKT", label: "Phòng Kỹ thuật - Vật tư" }];
+const OPTIONS_DU_TOAN = [{ value: "PDT", label: "Phòng Đầu tư" }];
 
-export const GeneralInfo = ({register,}: {register: UseFormRegister<ProjectFormData>;}) => {
+export const SettlementProfile = ({
+  register,
+}: {
+  register: UseFormRegister<ProjectFormData>;
+}) => {
   return (
     <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
       {/* Tiêu đề khối */}
       <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex justify-between">
         <h3 className="font-bold text-blue-800 text-sm uppercase">
-          I. Thông tin chung
+          VII. Quyết toán
         </h3>
-        <span className="text-[10px] text-gray-400 italic font-medium"></span>
+         <span className="text-[10px] text-gray-400 italic font-medium">
+          Đơn vị: VNĐ
+        </span>
       </div>
 
       <div className="p-5 space-y-8">
@@ -24,34 +31,32 @@ export const GeneralInfo = ({register,}: {register: UseFormRegister<ProjectFormD
         <div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FormField
-              label="ĐƠN VỊ CHỦ QUẢN"
-              type="input"
-              // defaultValue="Cty Cổ phần Phà An Giang"
-              {...register("donViChuQuan")}
-            />
-            <FormField
-              label="TÊN CÔNG TRÌNH"
-              type="input"
-              {...register("tenCongTrinh")}
-            />
-            <FormField
-              label="Ngày tạo"
+              label="Ngày quyết toán"
               type="date"
-              {...register("ngayTao")}
+              {...register("qt_ngay")}
+            />
+            <FormField
+              label="Tổng giá quyết toan"
+              type="number"
+              placeholder="0"
+              {...register("qt_TongGiaTri")}
+            />
+            <FormField
+              label="Tổng chi phí Xây dựng"
+              type="number"
+              placeholder="0"
+              {...register("pd_TongCPXD")}
             />
             <SelectField
               label="Đơn vị"
               options={OPTIONS_DU_TOAN}
-              defaultValue="PKT"
-              {...register("donVi")}
+              {...register("qt_DonVi")}
             ></SelectField>
-            <div className="hidden">
-             <FormField
-              label="Trạng thái"
-              type="input"
-              // defaultValue="DT"
-              {...register("trangThai")}
-            /></div>
+            <AttachField
+              label="Link file đính kèm"
+              placeholder="https://..."
+              {...register("qt_link")}
+            />
           </div>
         </div>
 

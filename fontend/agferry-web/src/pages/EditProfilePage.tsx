@@ -102,7 +102,8 @@ const EditProfilePage = () => {
           {/* Avatar */}
           <div className="flex items-center gap-4 mb-6">
             <div className="relative w-28 h-28">
-              <div className="w-full h-full rounded-full bg-indigo-200 flex items-center justify-center text-4xl font-bold text-indigo-700">
+              <div className="w-full h-full rounded-full bg-indigo-200 flex items-center 
+              justify-center text-4xl font-bold text-indigo-700">
                 {user.fullName.charAt(0)}
               </div>
 
@@ -138,7 +139,8 @@ const EditProfilePage = () => {
                     fullName: err || undefined,
                   }));
                 }}
-                className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none ${errors.fullName ? "border-red-500" : ""}`}
+                className={`w-full border rounded-lg px-3 py-2 
+                  border-gray-300 card-soft focus:ring-2 focus:ring-indigo-500 outline-none ${errors.fullName ? "border-red-500" : ""}`}
               />
               {errors.fullName && (
                 <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
@@ -157,7 +159,8 @@ const EditProfilePage = () => {
                   setErrors((prev) => ({ ...prev, phone: err || undefined }));
                 }}
                 placeholder="xxxx.xxx.xxx"
-                className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none  ${errors.phone ? "border-red-500" : ""}`}
+                className={`w-full border rounded-lg px-3 py-2 
+                  border-gray-300 card-soft focus:ring-2 focus:ring-indigo-500 outline-none  ${errors.phone ? "border-red-500" : ""}`}
               />
               {errors.phone && (
                 <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
@@ -170,17 +173,17 @@ const EditProfilePage = () => {
               <input
                 value={user.username}
                 disabled
-                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+                className="w-full border rounded-lg px-3 py-2 bg-gray-100 border-gray-300 card-soft"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium mb-1">Email</label>
+              <label className="block text-sm font-medium mb-1 ">Email</label>
               <input
                 value={user.email}
                 disabled
-                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+                className="w-full border rounded-lg px-3 py-2 bg-gray-100 border-gray-300 card-soft"
               />
             </div>
 
@@ -192,7 +195,7 @@ const EditProfilePage = () => {
               <input
                 value={user.departmentName}
                 disabled
-                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+                className="w-full border rounded-lg px-3 py-2 bg-gray-100 border-gray-300 card-soft"
               />
             </div>
 

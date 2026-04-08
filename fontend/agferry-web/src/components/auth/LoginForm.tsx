@@ -20,7 +20,6 @@ const LoginForm = () => {
     }
   };
 
-
   return (
     <>
       <div className="card-login flex items-center justify-center w-full max-w-5xl mx-auto px-4">
