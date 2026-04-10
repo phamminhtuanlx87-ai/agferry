@@ -30,6 +30,15 @@ export const SettlementProfile = ({
         {/* Nhánh Dự toán */}
         <div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="hidden">
+            <FormField
+              label="ID Giai Doan"
+              type="input"
+              {...register("qt_ID")}
+              disabled={true} // Vô hiệu hóa input
+              style={{ display: 'none' }} // Ẩn hoàn toàn khỏi giao diện
+            />
+            </div>
             <FormField
               label="Ngày quyết toán"
               type="date"

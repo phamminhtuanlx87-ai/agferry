@@ -1,5 +1,6 @@
 // Tên file: types.ts
 export interface ProjectFormData {
+    maCongTrinh: string;
     donViChuQuan: string;
     tenCongTrinh: string;
     donVi: string;
@@ -7,6 +8,7 @@ export interface ProjectFormData {
     trangThai: string;
     
     // Nhóm Dự toán
+    dt_ID: string;
     dt_ngay: string;
     dt_TongGiaTri: string;
     dt_TongCPXD: string;
@@ -14,6 +16,7 @@ export interface ProjectFormData {
     dt_link: string;
     
     // Nhóm Thẩm tra
+    tt_ID: string;
     tt_ngay: string;
     tt_TongGiaTri: string;
     tt_TongCPXD: string;
@@ -21,6 +24,7 @@ export interface ProjectFormData {
     tt_link: string;
 
     // Nhóm Qđ phê duyệt DT
+    pd_ID: string;
     pd_ngay: string;
     pd_TongGiaTri: string;
     pd_TongCPXD: string;
@@ -29,18 +33,21 @@ export interface ProjectFormData {
 
 
     // Nhóm Thi công
-    tc_ngayKhoiCong: string;
+    tc_ID: string;
+    tc_ngay: string;
     tc_tongNgay: string;
     tc_ngayHoanThanh: string;
     tc_DonVi: string;
     
     // Nhóm Nghiệm thu
-    nt_ngayNghiemThu: string;
+    nt_ID: string;
+    nt_ngay: string;
     nt_soNgayTcThucTe: string;
     nt_link: string;
     nt_DonVi: string;
 
     // Nhóm Dự toán PS
+    dtdc_ID: string;
     dtdc_ngay: string;
     dtdc_TongGiaTri: string;
     dtdc_TongCPXD: string;
@@ -48,6 +55,7 @@ export interface ProjectFormData {
     dtdc_link: string;
     
     // Nhóm Thẩm tra DT PS
+    ttdc_ID: string;
     ttdc_ngay: string;
     ttdc_TongGiaTri: string;
     ttdc_TongCPXD: string;
@@ -55,6 +63,7 @@ export interface ProjectFormData {
     ttdc_link: string;
 
     // Nhóm Qđ phê duyệt DT điều chỉnh
+    pddc_ID: string;
     pddc_ngay: string;
     pddc_TongGiaTri: string;
     pddc_TongCPXD: string;
@@ -62,6 +71,7 @@ export interface ProjectFormData {
     pddc_link: string;
 
    // Nhóm Quyết toán
+    qt_ID: string;
     qt_ngay: string;
     qt_TongGiaTri: string;
     qt_TongCPXD: string;

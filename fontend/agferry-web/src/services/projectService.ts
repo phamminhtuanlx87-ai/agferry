@@ -5,16 +5,34 @@ export const isAuthenticated = () => {
   return !!token;
 };
 
-
-export const addProject = (donViChuQuan: string, tenCongTrinh: string, ngayTao: string, donVi:string, trangThai: string) => {
-  return api.post("/Project/add", {
-    donViChuQuan: donViChuQuan,
-    tenCongTrinh: tenCongTrinh,
-    ngayTao: ngayTao,
-    donVi: donVi,
-    trangThai: trangThai,
-  });
+export interface AddProjectRequest {
+    tenCongTrinh: string;
+    ngayTao: string; // Backend dùng DateOnly, gửi chuỗi YYYY-MM-DD là chuẩn
+    donViChuQuan: string;
+    maHieuGiaiDoan: string;
+    // Thêm các trường khác nếu cần, nhưng Backend hiện tại chỉ cần các trường trên
+}
+export const addProject = (data: AddProjectRequest) => {
+ return api.post("/addproject", data);
 };
+export interface StagePayload {
+    id?: number; // Có thể có hoặc không khi thêm mới
+    congTrinhId: number;
+    maHieuGiaiDoan: string;
+    maHieuDonVi: string;
+    ngayThucHien?: string;
+    tongGiaTri?: number;
+    chiPhiXayDung?: number;
+    soNgayTcPgv?: string;
+    ngayHoanThanh?: string;
+    soNgayTcThucTe?: string;
+    linkFile?: string;
+}
+export const addStage = (data: StagePayload) => {
+  // Gửi trực tiếp 'data', không bọc trong { data }
+  return api.post("/addstage", data); 
+};
+
 
 export const getProjectList = async (year: number) => {
   return await api.get(`/getprojectlist/${year}`);

@@ -9,10 +9,14 @@ import { SettlementProfile } from "./SettlementProfile";
 import { AdjustedEstimateSection } from "./AdjustedEstimateSection";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProject } from "@/services/projectService";
-
+import {
+  addStage,
+  getProject,
+  type StagePayload,
+} from "@/services/projectService";
+import Swal from "sweetalert2";
 interface ChiTiet {
-  id: number;
+  id: string;
   maHieuGiaiDoan: string; // "DT", "DTDC", "QT"...
   maHieuDonVi: string;
   tongGiaTri: number;
@@ -26,6 +30,7 @@ interface ChiTiet {
 }
 
 interface ProjectDetail {
+  maCongTrinh: string;
   tenCongTrinh: string;
   donViChuQuan: string;
   tenGiaiDoan: string;
@@ -36,14 +41,106 @@ interface ProjectDetail {
 
 const UpdateProject = () => {
   // Khai báo công cụ quản lý form
-  const { register, handleSubmit, reset, watch } = useForm<ProjectFormData>();
+  const { register, handleSubmit, reset, watch, setValue } =
+    useForm<ProjectFormData>();
   const { id } = useParams<{ id: string }>();
   const projectId = Number(id);
   const isEditMode = !!projectId;
+
+  const [isSubmitting, setIsSubmitting] = useState(false); // Trạng thái loading
   // Khi bấm nút "Lưu thay đổi", hàm này sẽ chạy
-  const onSubmit = (data: ProjectFormData) => {
-    alert("Đã thu thập dữ liệu thành công! Hãy xem trong console.");
-    console.log("Dữ liệu form:", data);
+  const onSubmit = async (data: ProjectFormData) => {
+    // 1. Hiển thị loading và khóa nút submit
+    setIsSubmitting(true);
+    // Danh sách các cấu hình giai đoạn để map dữ liệu
+    if (isSubmitting)
+      try {
+        const stages = [
+          { prefix: "dt", maHieu: "DT" }, // Dự toán
+          { prefix: "tt", maHieu: "TTR_DT" }, // Thẩm tra DT
+          { prefix: "pd", maHieu: "PD_DT" }, // Phê duyệt DT
+          { prefix: "tc", maHieu: "TC" }, // Thi cong
+          { prefix: "nt", maHieu: "NT" }, // Nghiem thu
+          { prefix: "dtdc", maHieu: "DT_PS" }, //DT PS
+          { prefix: "ttdc", maHieu: "TTR_DT_PS" }, // Tham tra DT PS
+          { prefix: "pddc", maHieu: "PD_DT_PS" }, // Phe duyet DTPS
+          { prefix: "qt", maHieu: "QT" }, // Quyet toan
+        ];
+
+        for (const stage of stages) {
+          if (!stage || !stage.prefix) continue;
+          // Kiểm tra nếu có dữ liệu của giai đoạn đó thì mới gửi (ví dụ check ngày hoặc đơn vị)
+          if (data[`${stage.prefix}_DonVi` as keyof ProjectFormData]) {
+            const payload: StagePayload = {
+              congTrinhId: parseInt(data.maCongTrinh),
+              maHieuGiaiDoan: stage.maHieu,
+              maHieuDonVi:
+                data[`${stage.prefix}_DonVi` as keyof ProjectFormData],
+              ngayThucHien:
+                data[`${stage.prefix}_ngay` as keyof ProjectFormData],
+
+              ngayHoanThanh:
+                data[`${stage.prefix}_ngayHoanThanh` as keyof ProjectFormData],
+              soNgayTcPgv:
+                data[`${stage.prefix}_tongNgay` as keyof ProjectFormData],
+              soNgayTcThucTe:
+                data[`${stage.prefix}_soNgayTcThucTe` as keyof ProjectFormData],
+
+              // Sử dụng replace để xóa dấu chấm
+              tongGiaTri: Number(
+                (
+                  data[`${stage.prefix}_TongGiaTri` as keyof ProjectFormData] ||
+                  "0"
+                )
+                  .toString()
+                  .replace(/\./g, ""), // Tìm tất cả dấu chấm và thay bằng chuỗi rỗng
+              ),
+
+              chiPhiXayDung: Number(
+                (
+                  data[`${stage.prefix}_TongCPXD` as keyof ProjectFormData] ||
+                  "0"
+                )
+                  .toString()
+                  .replace(/\./g, ""),
+              ),
+              linkFile: data[`${stage.prefix}_link` as keyof ProjectFormData],
+              // Với nhóm thi công/nghiệm thu bạn map các trường đặc thù tương ứng
+            };
+
+            try {
+              await addStage(payload);
+            } catch (err) {
+              console.error(`Lỗi khi lưu giai đoạn ${stage.maHieu}:`, err);
+              Swal.fire(
+                "Lỗi!",
+                "Không thể cập nhật dữ liệu. Vui lòng kiểm tra lại.",
+                "error",
+              );
+            }
+          }
+        }
+        // 2. Thông báo thành công khi tất cả giai đoạn hoàn tất
+        await Swal.fire({
+          title: "Thành công!",
+          text: "Dữ liệu công trình đã được cập nhật.",
+          icon: "success",
+          confirmButtonText: "OK",
+          timer: 2000, // Tự động đóng sau 2s
+          timerProgressBar: true,
+        });
+        window.location.reload();
+      } catch (error) {
+        console.error("Lỗi cập nhật:", error);
+        Swal.fire(
+          "Lỗi!",
+          "Không thể cập nhật dữ liệu. Vui lòng kiểm tra lại.",
+          "error",
+        );
+      } finally {
+        // 4. Tắt loading
+        setIsSubmitting(false);
+      }
   };
 
   const [project, setProject] = useState<ProjectDetail>();
@@ -86,12 +183,14 @@ const UpdateProject = () => {
         // Đổ dữ liệu vào Form
         reset({
           // I. Thông tin chung
+          maCongTrinh: data.maCongTrinh,
           donViChuQuan: data.donViChuQuan,
           tenCongTrinh: data.tenCongTrinh,
           ngayTao: data.ngayTao?.split("T")[0],
 
           // II. Dự toán (Map từ giai đoạn "DT") && Thẩm tra DT
           // Dự toán
+          dt_ID: giaiDoanDT?.id,
           dt_ngay: giaiDoanDT?.ngayThucHien?.split("T")[0], // Theo console là ngayThucHien
           dt_TongGiaTri: giaiDoanDT?.tongGiaTri
             ? new Intl.NumberFormat("vi-VN").format(giaiDoanDT.tongGiaTri)
@@ -102,6 +201,7 @@ const UpdateProject = () => {
           dt_DonVi: giaiDoanDT?.maHieuDonVi,
           dt_link: giaiDoanDT?.linkFile,
           //Thẩm tra DT
+          tt_ID: giaiDoanTTr?.id,
           tt_ngay: giaiDoanTTr?.ngayThucHien?.split("T")[0],
           tt_TongGiaTri: giaiDoanTTr?.tongGiaTri
             ? new Intl.NumberFormat("vi-VN").format(giaiDoanTTr.tongGiaTri)
@@ -112,6 +212,7 @@ const UpdateProject = () => {
           tt_DonVi: giaiDoanTTr?.maHieuDonVi,
           tt_link: giaiDoanTTr?.linkFile,
           //III. QĐ phê duyệt DT
+          pd_ID: giaiDoanPDDT?.id,
           pd_ngay: giaiDoanPDDT?.ngayThucHien?.split("T")[0],
           pd_TongGiaTri: giaiDoanPDDT?.tongGiaTri
             ? new Intl.NumberFormat("vi-VN").format(giaiDoanPDDT.tongGiaTri)
@@ -123,17 +224,20 @@ const UpdateProject = () => {
           pd_link: giaiDoanPDDT?.linkFile,
 
           //IV. Thi công
-          tc_ngayKhoiCong: giaiDoanTC?.ngayThucHien?.split("T")[0],
+          tc_ID: giaiDoanTC?.id,
+          tc_ngay: giaiDoanTC?.ngayThucHien?.split("T")[0],
           tc_tongNgay: giaiDoanTC?.soNgayTcPgv,
           tc_ngayHoanThanh: giaiDoanTC?.ngayHoanThanh,
           tc_DonVi: giaiDoanTC?.maHieuDonVi,
 
           //V. Nghiệm thu
-          nt_ngayNghiemThu: giaiDoanNT?.ngayThucHien?.split("T")[0],
+          nt_ID: giaiDoanNT?.id,
+          nt_ngay: giaiDoanNT?.ngayThucHien?.split("T")[0],
           nt_soNgayTcThucTe: giaiDoanNT?.soNgayTcThucTe,
           nt_DonVi: giaiDoanNT?.maHieuDonVi,
-          nt_link:giaiDoanNT?.linkFile,
+          nt_link: giaiDoanNT?.linkFile,
           //VI. DT PS
+          dtdc_ID: giaiDoanDTPS?.id,
           dtdc_ngay: giaiDoanDTPS?.ngayThucHien?.split("T")[0],
           dtdc_TongGiaTri: giaiDoanDTPS?.tongGiaTri
             ? new Intl.NumberFormat("vi-VN").format(giaiDoanDTPS.tongGiaTri)
@@ -144,6 +248,7 @@ const UpdateProject = () => {
           dtdc_DonVi: giaiDoanDTPS?.maHieuDonVi,
           dtdc_link: giaiDoanDTPS?.linkFile,
           //VII. Thẩm tra DT PS
+          ttdc_ID: giaiDoanTTrDTPS?.id,
           ttdc_ngay: giaiDoanTTrDTPS?.ngayThucHien?.split("T")[0],
           ttdc_TongGiaTri: giaiDoanTTrDTPS?.tongGiaTri
             ? new Intl.NumberFormat("vi-VN").format(giaiDoanTTrDTPS.tongGiaTri)
@@ -156,6 +261,7 @@ const UpdateProject = () => {
           ttdc_DonVi: giaiDoanTTrDTPS?.maHieuDonVi,
           ttdc_link: giaiDoanTTrDTPS?.linkFile,
           //VIII. QD phê duyệt DT PS
+          pddc_ID: giaiDoanPDDTDC?.id,
           pddc_ngay: giaiDoanPDDTDC?.ngayThucHien?.split("T")[0],
           pddc_TongGiaTri: giaiDoanPDDTDC?.tongGiaTri
             ? new Intl.NumberFormat("vi-VN").format(giaiDoanPDDTDC.tongGiaTri)
@@ -169,6 +275,7 @@ const UpdateProject = () => {
           pddc_link: giaiDoanPDDTDC?.linkFile,
 
           // Nhóm Quyết toán
+          qt_ID: giaiDoanQT?.id,
           qt_ngay: giaiDoanQT?.ngayThucHien?.split("T")[0],
           qt_TongGiaTri: giaiDoanQT?.tongGiaTri
             ? new Intl.NumberFormat("vi-VN").format(giaiDoanQT.tongGiaTri)
@@ -212,9 +319,10 @@ const UpdateProject = () => {
                     {isEditMode && (
                       <>
                         {/* Phần 2: Dự toán & thẩm tra */}
-                        {project?.chiTietCongTrinhs.some(
-                          (ct) => ct.maHieuGiaiDoan === "DT",
-                        ) && (
+                        {(project?.chiTietCongTrinhs?.length === 0 ||
+                          project?.chiTietCongTrinhs.some(
+                            (ct) => ct.maHieuGiaiDoan === "DT",
+                          )) && (
                           <section className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
                             <EstimationSection register={register} />
                           </section>
@@ -232,7 +340,11 @@ const UpdateProject = () => {
                           ["TC", "PD_DT"].includes(ct.maHieuGiaiDoan),
                         ) && (
                           <section className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-                            <ConstructionSection register={register} />
+                            <ConstructionSection
+                              register={register}
+                              watch={watch}
+                              setValue={setValue}
+                            />
                           </section>
                         )}
                         {/* Phần 5: DT_PS*/}
@@ -252,8 +364,8 @@ const UpdateProject = () => {
                           </section>
                         )}
                         {/* Phần 6: Quyết toán*/}
-                        {project?.chiTietCongTrinhs.some(
-                          (ct) => ["PD_DT_PS", "QT"].includes(ct.maHieuGiaiDoan),
+                        {project?.chiTietCongTrinhs.some((ct) =>
+                          ["PD_DT_PS", "QT"].includes(ct.maHieuGiaiDoan),
                         ) && (
                           <section className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
                             <SettlementProfile register={register} />

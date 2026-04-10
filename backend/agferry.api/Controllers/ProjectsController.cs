@@ -35,7 +35,7 @@ namespace agferry.api.Controllers
 
         }
 
-        [HttpPost("addproject")]
+        [HttpPost("api/addproject")]
         public async Task<IActionResult> AddProject([FromBody] ProjectRequest request)
         {
             ArgumentNullException.ThrowIfNull(request);
@@ -70,7 +70,7 @@ namespace agferry.api.Controllers
                 MaHieuGiaiDoan = request.MaHieuGiaiDoan
             });
         }
-        [HttpPost("editproject")]
+        [HttpPost("api/editproject/{id}")]
         public async Task<IActionResult> EditProject([FromBody] ProjectRequest request)
         {
             ArgumentNullException.ThrowIfNull(request);
@@ -127,13 +127,14 @@ namespace agferry.api.Controllers
                 .ToListAsync();
             return Ok(new
             {
+                maCongTrinh = ctr.Id,
                 TenCongTrinh = ctr.TenCongTrinh,
                 NgayTao = ctr.NgayTao,
                 DonViChuQuan = ctr.DonViChuQuan,
                 MaHieuGiaiDoan = ctr.MaHieuGiaiDoan,
                 TenGiaiDoan = ctr.MaHieuGiaiDoanNavigation?.TenGiaiDoan,
                 ChiTietCongTrinhs = chiTietCtr,
-            });
+            }); 
         }
 
         [HttpGet("api/getprojectlist/{year}")]
@@ -214,7 +215,7 @@ namespace agferry.api.Controllers
             public string? LinkFile { get; set; }
         }
 
-        [HttpPost("addStage")]
+        [HttpPost("api/addstage")]
         public async Task<IActionResult> AddStage([FromBody] StageRequest request)
         {
             ArgumentNullException.ThrowIfNull(request);
@@ -298,6 +299,12 @@ namespace agferry.api.Controllers
                 chiTietCtr.LinkFile
             });
         }
+
+
+
+
+
+
 
 
         // GET: ProjectsController

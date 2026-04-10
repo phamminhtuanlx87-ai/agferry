@@ -42,6 +42,15 @@ export const EstimationSection = ({
             <span className="text-sm font-bold uppercase">Dự toán</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="hidden">
+            <FormField
+              label="ID Giai Doan"
+              type="input"
+              {...register("dt_ID")}
+              disabled={true} // Vô hiệu hóa input
+              style={{ display: 'none' }} // Ẩn hoàn toàn khỏi giao diện
+            />
+            </div>
             <FormField
               label="Ngày lập dự toán"
               type="date"
@@ -79,6 +88,15 @@ export const EstimationSection = ({
             </span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="hidden">
+            <FormField
+              label="ID Giai Doan"
+              type="input"
+              {...register("tt_ID")}
+              disabled={true} // Vô hiệu hóa input
+              style={{ display: 'none' }} // Ẩn hoàn toàn khỏi giao diện
+            />
+            </div>
             <FormField
               label="Ngày thẩm tra"
               type="date"

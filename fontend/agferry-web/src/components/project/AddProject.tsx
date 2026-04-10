@@ -1,20 +1,34 @@
 import type { ProjectFormData } from "./types";
 import { useForm } from "react-hook-form";
 import { GeneralInfo } from "./GeneralInfo";
+import { addProject, type AddProjectRequest } from "@/services/projectService";
+import { useNavigate } from "react-router-dom";
 
 const AddProject = () => {
   // Khai báo công cụ quản lý form
   const { register, handleSubmit } = useForm<ProjectFormData>({
-  defaultValues: {
-    donVi: "PKT", // Giá trị này phải khớp với 'value' trong OPTIONS_DU_TOAN
-    donViChuQuan: "Cty Cổ phần Phà An Giang"
-  }
-});
+    defaultValues: {
+      donVi: "PKT", // Giá trị này phải khớp với 'value' trong OPTIONS_DU_TOAN
+      donViChuQuan: "Cty Cổ phần Phà An Giang",
+    },
+  });
+  const navigate = useNavigate();
+  const onSubmit = async (data: ProjectFormData) => {
+    // Tạo payload khớp với class ProjectRequest ở Backend
+    const payload: AddProjectRequest = {
+      tenCongTrinh: data.tenCongTrinh,
+      ngayTao: data.ngayTao, // Đảm bảo format là "2026-04-09"
+      donViChuQuan: data.donViChuQuan,
+      maHieuGiaiDoan: data.trangThai || "DT", // Map trangThai từ Form sang MaHieuGiaiDoan
+    };
 
-  // Khi bấm nút "Lưu thay đổi", hàm này sẽ chạy
-  const onSubmit = (data: ProjectFormData) => {
-    alert("Đã thu thập dữ liệu thành công! Hãy xem trong console.");
-    console.log("Dữ liệu form:", data);
+    try {
+      console.log("Dữ liệu gửi đi:", payload);
+      await addProject(payload);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Lỗi:", error);
+    }
   };
 
   return (

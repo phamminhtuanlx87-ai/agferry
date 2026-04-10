@@ -23,6 +23,15 @@ export const GeneralInfo = ({register,}: {register: UseFormRegister<ProjectFormD
         {/* Nhánh Dự toán */}
         <div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="hidden">
+            <FormField
+              label="Mã Công trình"
+              type="input"
+              {...register("maCongTrinh")}
+              disabled={true} // Vô hiệu hóa input
+              style={{ display: 'none' }} // Ẩn hoàn toàn khỏi giao diện
+            />
+            </div>
             <FormField
               label="ĐƠN VỊ CHỦ QUẢN"
               type="input"
@@ -49,7 +58,7 @@ export const GeneralInfo = ({register,}: {register: UseFormRegister<ProjectFormD
              <FormField
               label="Trạng thái"
               type="input"
-              // defaultValue="DT"
+              defaultValue="DT"
               {...register("trangThai")}
             /></div>
           </div>
