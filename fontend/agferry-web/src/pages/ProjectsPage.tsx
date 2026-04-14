@@ -1,6 +1,5 @@
 import FilterProject from "@/components/project/FilterProject";
 import ProjectTable from "@/components/project/ProjectTable";
-import { projects } from "@/data/projects";
 import { Link } from "react-router-dom";
 
 const ProjectsPage = () => {
@@ -20,7 +19,7 @@ const ProjectsPage = () => {
             </Link>
           </div>
           <FilterProject></FilterProject>
-          <ProjectTable projects={projects} rowsPerPage={10}></ProjectTable>
+          <ProjectTable rowsPerPage={10}></ProjectTable>
         </div>
       </section>
     </>

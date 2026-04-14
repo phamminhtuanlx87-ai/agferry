@@ -101,6 +101,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+app.UseDefaultFiles(); // tìm index.html
+app.UseStaticFiles();  // cho phép serve file tĩnh
+app.MapFallbackToFile("index.html");
 
 // 🔑 QUAN TRỌNG
 app.UseAuthentication();

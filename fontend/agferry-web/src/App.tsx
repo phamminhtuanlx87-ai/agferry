@@ -16,7 +16,6 @@ import EditPassword from "./pages/EditPassword";
 import AddProject from "./components/project/AddProject";
 import ProjectsPage from "./pages/ProjectsPage";
 import UpdateProject from "./components/project/UpdateProject";
-import Test from "./pages/test";
 
 const queryClient = new QueryClient();
 function App() {
@@ -44,7 +43,6 @@ function App() {
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/addproject" element={<AddProject />} />
             <Route path="/projects/updateproject/:id" element={<UpdateProject />} />
-            <Route path="/test/:id" element={<Test />} />
           </Route>
         </Routes>
       </BrowserRouter>
